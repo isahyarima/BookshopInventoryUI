@@ -1,0 +1,281 @@
+<div class="ui-g-12">
+  <div *ngIf="displayList">
+    <p-toolbar>
+      <div class="ui-toolbar-group-right">
+        <button pButton type="button" (click)="newPurchaseOrder()" label="New" icon="fa fa-plus"></button>
+      </div>
+    </p-toolbar>
+    <p-panel header="Purchase Order" styleClass="inventory">
+      <p-table [columns]="cols" [value]="purchaseOrderList" selectionMode="single" dataKey="purchaseOrderId"
+        [(selection)]="selectedCar" [responsive]="true" [paginator]="true" [rows]="10">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+            <th style="width: 15em;"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-doc let-columns="columns">
+          <tr [pSelectableRow]="doc">
+            <td>
+              {{doc.orderNumber}}
+            </td>
+            <td>
+              {{doc.orderDate | date}}
+            </td>
+            <td>
+              {{doc.orderValidDate | date}}
+            </td>
+            <td>
+              {{doc.tax}}
+            </td>
+            <td>
+              {{doc.supplierName}}
+            </td>
+            <td>
+              {{doc.status}}
+            </td>
+            <td style="text-align:center">
+              <button pButton type="button" icon="pi pi-pencil" class="ui-button-info" style="margin-right: .5em"
+                (click)="editPurchaseOrder(doc)"></button>
+              <button pButton type="button" label="Order Detail" class="ui-button-info" style="margin-right: .5em"
+                (click)="addPurchaseOrderDetail(doc)"></button>
+             
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td style="color: red;" [attr.colspan]="columns.length">
+              No records found
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-panel>
+  </div>
+</div>
+
+<div *ngIf="displayDataInput">
+  <div class="ui-g-12 ui-md-12 ui-lg-2"></div>
+  <div class="ui-g-12 ui-md-12 ui-lg-8 ui-fluid">
+    <p-panel header="Purchase Order" styleClass="resolution-center">
+      <form novalidate [formGroup]="purchaseOrderForm">
+        <div class="ui-g">
+
+          <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <label for="orderNumber">Order Number</label>
+            <input type="text" maxlength="20" pInputText placeholder="Order Number" readonly="readonly"
+              [ngClass]="!purchaseOrderForm.controls['orderNumber'].valid ? 'required-input' : 'valid-input'"
+              name="orderNumber" id="orderNumber" formControlName="orderNumber">
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <label for="orderDate">Order Date</label>
+            <p-calendar dateFormat="mm/dd/yy" placeholder="Order Date"
+              [ngClass]="!purchaseOrderForm.controls['orderDate'].valid ? 'required-input' : 'valid-input'"
+              name="orderDate" id="orderDate" formControlName="orderDate"></p-calendar>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <label for="orderValidDate">Order Valid Date</label>
+            <p-calendar dateFormat="mm/dd/yy" placeholder="Order Valid Date"
+              [ngClass]="!purchaseOrderForm.controls['orderValidDate'].valid ? 'required-input' : 'valid-input'"
+              name="orderValidDate" id="orderValidDate" formControlName="orderValidDate"></p-calendar>
+
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <label for="taxId">Tax</label>
+            <p-dropdown [options]="taxArray"
+              [ngClass]="!purchaseOrderForm.controls['taxId'].valid ? 'required-input' : 'valid-input'" name="taxId"
+              id="taxId" formControlName="taxId"></p-dropdown>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <label for="supplierId">Supplier</label>
+            <p-dropdown [options]="supplierArray"
+              [ngClass]="!purchaseOrderForm.controls['supplierId'].valid ? 'required-input' : 'valid-input'"
+              name="supplierId" id="supplierId" formControlName="supplierId"></p-dropdown>
+
+          </div>
+          <div class="ui-g-12">
+            <p-toolbar>
+              <div class="ui-toolbar-group-right">
+                <button pButton type="button" (click)="displayDataInput=false; displayList=true;" label="Back to List"
+                  style="margin-bottom:10px" class="ui-button-danger"></button>
+              </div>
+
+              <div class="ui-toolbar-group-right">
+                <button [disabled]="(purchaseOrderForm.invalid)" pButton type="button"
+                  (click)="SubmitPurchaseOrder(purchaseOrderForm)" label="Submit" icon="fa fa-plus"></button>
+              </div>
+            </p-toolbar>
+          </div>
+        </div>
+      </form>
+    </p-panel>
+    <div class="ui-g-12 ui-md-12 ui-lg-2"></div>
+  </div>
+</div>
+
+<div *ngIf="showPurchaseOrderDetailList">
+  <div class="ui-g-12 ui-md-12 ui-lg-1"></div>
+  <div class="ui-g-12 ui-md-12 ui-lg-10">
+    
+    <div class="invoice">
+      <div class="invoice-items">
+        <table>
+          <thead>
+          <tr>
+            <th>Order Number</th>
+            <th>Order Date</th>
+            <th>Order Valid Date</th>
+            <th>Tax</th>
+            <th>Supplier</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>
+              {{rowSelected.orderNumber}}
+            </td>
+            <td>
+              {{rowSelected.orderDate | date}}
+            </td>
+            <td>
+              {{rowSelected.orderValidDate | date}}
+
+            <td>
+              {{rowSelected.tax}}
+            </td>
+            <td>
+              {{rowSelected.supplierName}}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12 ui-md-6 ui-lg-10">
+        <div class="ui-toolbar-group-left">
+          <button pButton type="button" class="ui-button-danger" (click)="displayList=true; showPurchaseOrderInput=false; showPurchaseOrderDetailList = false"
+            label="Back" icon="fa fa-arrow-left"></button>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-6 ui-lg-2">
+        <div class="ui-toolbar-group-right">
+          <button pButton type="button" (click)="showPurchaseOrderInput=true;"
+            label="New" icon="fa fa-plus"></button>
+        </div>
+      </div>
+    </div>
+     
+    <p-panel header="Purchase Order Detail" styleClass="inventory">
+      <p-table [columns]="cols" [value]="purchaseOrderDetailList" selectionMode="single" dataKey="purchaseOrderDetailId"
+        [(selection)]="selectedCar" [responsive]="true" [paginator]="true" [rows]="10">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+            <th style="width: 6em;"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-doc let-columns="columns">
+          <tr [pSelectableRow]="doc">
+            <td>
+              {{doc.lotNumber}}
+            </td>
+            <td>
+              {{doc.bookTitle}}
+            </td>
+            <td>
+              {{doc.parkSize}}
+            </td>
+            <td>
+              {{doc.quantity}}
+            </td>
+            <td>
+              {{doc.costPrice}}
+            </td>
+            <td>
+              {{doc.status}}
+            </td>
+            <td style="text-align:center">
+              <button pButton type="button" icon="pi pi-pencil" class="ui-button-info" style="margin-right: .5em"
+                (click)="editPurchaseOrderDetail(doc)"></button>
+              <!-- <button *ngIf="editing" pButton type="button"  icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditPurchaseOrderDetail(rowData)"></button> -->
+              <!-- <button pButton type="button" icon="pi pi-times" class="ui-button-danger"
+                  (click)="onPurchaseOrderDetail(doc)"></button>
+              </td> -->
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td style="color: red;" [attr.colspan]="columns.length">
+              No records found
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-panel>
+  </div>
+  <div class="ui-g-12 ui-md-12 ui-lg-1"></div>
+</div>
+
+<p-dialog header="Purchase Order Detail" [(visible)]="showPurchaseOrderInput" modal="modal" showEffect="fade" [style]="{ width: '600px' }">
+  <div class="ui-g ui-fluid">
+    <form novalidate [formGroup]="purchaseOrderDetailForm">
+      <div class="ui-g">
+        <div class="ui-g-12 ui-md-12 ui-lg-6">
+          <label for="bookId">Book</label>
+          <p-dropdown [options]="bookArray"
+          [ngClass]="!purchaseOrderDetailForm.controls['bookId'].valid ? 'required-input' : 'valid-input'"
+          name="bookId" id="bookId" formControlName="bookId"></p-dropdown>
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-6">
+          <label for="parkSize">Park Size</label>
+          <input type="text" maxlength="20" pInputText placeholder="Park Size"
+            [ngClass]="!purchaseOrderDetailForm.controls['parkSize'].valid ? 'required-input' : 'valid-input'"
+            name="parkSize" id="parkSize" formControlName="parkSize">
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-6">
+          <label for="lotNumber">Lot Number</label>
+          <input type="text" maxlength="20" pInputText placeholder="Lot Number" readonly="readonly"
+            [ngClass]="!purchaseOrderDetailForm.controls['lotNumber'].valid ? 'required-input' : 'valid-input'"
+            name="lotNumber" id="lotNumber" formControlName="lotNumber">
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-6">
+          <label for="quantity">Quantity</label>
+          <input type="number" maxlength="20" pInputText placeholder="Quantity"
+            [ngClass]="!purchaseOrderDetailForm.controls['quantity'].valid ? 'required-input' : 'valid-input'"
+            name="quantity" id="quantity" formControlName="quantity">
+        </div>
+        <div class="ui-g-12 ui-md-12 ui-lg-6">
+          <label for="costPrice">Unit Cost Price</label>
+          <input type="text" maxlength="20" pInputText placeholder="Cost Price" formatM
+            [ngClass]="!purchaseOrderDetailForm.controls['costPrice'].valid ? 'required-input' : 'valid-input'"
+            name="costPrice" id="costPrice" formControlName="costPrice">
+        </div>
+        
+      </div>
+    </form>
+  </div>
+  <p-footer>
+    <button
+        type="button"
+        pButton
+        icon="fa fa-plus"
+        [disabled]="(purchaseOrderDetailForm.invalid)"
+        (click)="SubmitPurchaseOrderDetail(purchaseOrderDetailForm)"
+        label="Submit"
+    ></button>
+    <button
+        type="button"
+        pButton
+        icon="fa fa-close"
+        (click)="showPurchaseOrderInput = false"
+        label="Close"
+    ></button>
+</p-footer>
+</p-dialog>

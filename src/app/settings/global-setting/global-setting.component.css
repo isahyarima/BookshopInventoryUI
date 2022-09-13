@@ -1,0 +1,6 @@
+.valid-input {
+    border-left: 3px solid #3cd225 !important
+}
+.required-input {
+    border-left: 3px solid #ff0000 !important
+}

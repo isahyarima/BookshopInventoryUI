@@ -1,0 +1,46 @@
+<p-toolbar>
+    <div class="ui-toolbar-group-left">
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon">
+                <i class="fa fa-search"></i>
+            </span>
+            <input type="text" pInputText placeholder="Name/Employee No." (keyup)="searchTerm$.next($event.target.value)" name="searchCenter" id="searchCenter" [(ngModel)]="searchInput">
+        </div>
+    </div>
+</p-toolbar>
+<p-table [columns]="cols" [value]="employeeList" selectionMode="single" dataKey="employeeId" [(selection)]="selectedCar" [responsive]="true" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                {{col.header}}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-doc>
+        <tr [pSelectableRow]="doc" (click)="selectEmployee(doc)">
+
+            <td>
+                {{doc.employeeNumber}}
+            </td>
+            <td>
+                {{doc.name}}
+            </td>
+            <td>
+                {{doc.phoneNumber}}
+            </td>
+            <td>
+                {{doc.departmentName}}
+            </td>
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td style="color: red;" [attr.colspan]="columns.length">
+             No records found
+          </td>
+        </tr>
+      </ng-template>
+</p-table>

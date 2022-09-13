@@ -1,0 +1,105 @@
+.valid-input {
+    border-left: 3px solid #3cd225 !important
+}
+
+.required-input {
+    border-left: 3px solid #ff0000 !important
+}
+
+#invoice-content {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .invoice {
+    padding: 0rem;
+  }
+  .invoice .invoice-header {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+  .invoice .invoice-company .logo-image {
+    width: 75px;
+    margin-bottom: 0.5rem;
+  }
+  .invoice .invoice-company div {
+    margin-bottom: 0.5rem;
+  }
+  .invoice .invoice-company .company-name {
+    font-weight: 700;
+    font-size: 1.5rem;
+  }
+  .invoice .invoice-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    text-align: right;
+  }
+  .invoice .invoice-details {
+    width: 15rem;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  .invoice .invoice-details > div {
+    width: 50%;
+    margin-bottom: 0.5rem;
+  }
+  .invoice .invoice-details .invoice-label {
+    text-align: left;
+    font-weight: 700;
+  }
+  .invoice .invoice-details .invoice-value {
+    text-align: right;
+  }
+  .invoice .invoice-to {
+    margin-top: 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid #d6d7d9;
+  }
+  .invoice .invoice-to .bill-to {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  .invoice .invoice-to .invoice-to-info div {
+    margin-bottom: 0.5rem;
+  }
+  .invoice .invoice-items {
+    margin-top: 0rem;
+    padding-top: 0rem;
+  }
+  .invoice .invoice-items table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .invoice .invoice-items table tr {
+    border-bottom: 1px solid #d6d7d9;
+  }
+  .invoice .invoice-items table th {
+    font-weight: 700;
+  }
+  .invoice .invoice-items table th, .invoice .invoice-items table td {
+    padding: 1rem;
+    text-align: right;
+  }
+  .invoice .invoice-items table th:first-child, .invoice .invoice-items table td:first-child {
+    text-align: left;
+  }
+  .invoice .invoice-summary {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+  }
+  .invoice .invoice-summary .invoice-value {
+    font-weight: 700;
+  }

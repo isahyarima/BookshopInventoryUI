@@ -1,0 +1,149 @@
+<div class="ui-g-12">
+  <div *ngIf="displayList">
+    <p-toolbar>
+      <div class="ui-toolbar-group-right">
+        <button pButton type="button" (click)="newBook()" label="New" icon="fa fa-plus"></button>
+      </div>
+    </p-toolbar>
+    <p-panel header="Book" styleClass="inventory">
+      <p-table [columns]="cols" [value]="bookList" selectionMode="single" dataKey="bookId" [(selection)]="selectedCar"
+        [responsive]="true" [paginator]="true" [rows]="10">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+            <th style="width: 6em;"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-doc let-columns="columns">
+          <tr [pSelectableRow]="doc">
+            <td>
+              {{doc.categoryName}}
+            </td>
+            <td>
+              {{doc.bookTitle}}
+            </td>
+            <td>
+              {{doc.edition}}
+            </td>
+            <td>
+              {{doc.publisherName}}
+            </td>
+            <td>
+              {{doc.totalPage}}
+            </td>
+            <td>
+              {{doc.yearOfPublish}}
+            </td>
+            <td>
+              {{doc.barcode}}
+            </td>
+
+
+            <td style="text-align:center">
+              <button pButton type="button" icon="pi pi-pencil" class="ui-button-info" style="margin-right: .5em"
+                (click)="editBook(doc)"></button>
+              <!-- <button *ngIf="editing" pButton type="button"  icon="pi pi-check" class="ui-button-success" style="margin-right: .5em" (click)="onRowEditBook(rowData)"></button> -->
+              <!-- <button pButton type="button" icon="pi pi-times" class="ui-button-danger"
+                (click)="onBook(doc)"></button>
+            </td> -->
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td style="color: red;" [attr.colspan]="columns.length">
+              No records found
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-panel>
+  </div>
+</div>
+
+<div *ngIf="displayDataInput">
+  <div class="ui-g-12 ui-md-12 ui-lg-2"></div>
+  <div class="ui-g-12 ui-md-12 ui-lg-8 ui-fluid">
+    <p-panel header="Book" styleClass="resolution-center">
+      <form novalidate [formGroup]="bookForm">
+        <div class="ui-g">
+          <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <label for="bookTitle">Book Title</label>
+            <input type="text" maxlength="20" pInputText placeholder="Book Title"
+              [ngClass]="!bookForm.controls['bookTitle'].valid ? 'required-input' : 'valid-input'" name="bookTitle"
+              id="bookTitle" formControlName="bookTitle">
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <label for="categoryId">Category</label>
+            <p-dropdown [options]="categorysArray" formControlName="assessmentActivityTypeId"
+              [ngClass]="!bookForm.controls['categoryId'].valid ? 'required-input' : 'valid-input'" name="categoryId"
+              id="categoryId" formControlName="categoryId"></p-dropdown>
+
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <label for="totalPage">Total Page</label>
+            <input type="text" maxlength="20" pInputText placeholder="Total Page"
+              [ngClass]="!bookForm.controls['totalPage'].valid ? 'required-input' : 'valid-input'" name="totalPage"
+              id="totalPage" formControlName="totalPage">
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <label for="yearOfPublish">Year Of Publish</label>
+            <input type="text" maxlength="4" pInputText placeholder="Year Of Publish"
+              [ngClass]="!bookForm.controls['yearOfPublish'].valid ? 'required-input' : 'valid-input'"
+              name="yearOfPublish" id="yearOfPublish" formControlName="yearOfPublish">
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <label for="edition">Edition</label>
+            <p-dropdown [options]="publishers"
+              [ngClass]="!bookForm.controls['edition'].valid ? 'required-input' : 'valid-input'" name="edition"
+              id="edition" formControlName="edition"></p-dropdown>
+
+
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <label for="publisherId">Publisher</label>
+            <p-dropdown [options]="publisherArray" formControlName="assessmentActivityTypeId"
+              [ngClass]="!bookForm.controls['publisherId'].valid ? 'required-input' : 'valid-input'" name="publisherId"
+              id="publisherId" formControlName="publisherId"></p-dropdown>
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-6">
+            <label for="language">Language</label>
+            <input type="text" maxlength="20" pInputText placeholder="Language"
+              [ngClass]="!bookForm.controls['language'].valid ? 'required-input' : 'valid-input'" name="language"
+              id="language" formControlName="language">
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <label for="barcode">Barcode</label>
+            <input type="text" maxlength="20" pInputText placeholder="Barcode"
+              [ngClass]="!bookForm.controls['barcode'].valid ? 'required-input' : 'valid-input'" name="barcode"
+              id="barcode" formControlName="barcode">
+          </div>
+          <div class="ui-g-12 ui-md-12 ui-lg-12">
+            <label for="description">Description</label>
+            <textarea type="text" maxlength="20" pInputText placeholder="Description" rows="5"
+              [ngClass]="!bookForm.controls['description'].valid ? 'required-input' : 'valid-input'" name="description"
+              id="description" formControlName="description"></textarea>
+          </div>
+
+
+          <div class="ui-g-12">
+            <p-toolbar>
+              <div class="ui-toolbar-group-right">
+                <button pButton type="button" label="Back to List" (click)="displayList=true; displayDataInput=false;" style="margin-bottom:10px"
+                  class="ui-button-danger"></button>
+              </div>
+
+              <div class="ui-toolbar-group-right">
+
+                <button [disabled]="(bookForm.invalid)" pButton type="button" (click)="SubmitBook(bookForm)"
+                  label="Submit" icon="fa fa-plus"></button>
+              </div>
+            </p-toolbar>
+          </div>
+        </div>
+      </form>
+    </p-panel>
+    <div class="ui-g-12 ui-md-12 ui-lg-2"></div>
+  </div>

@@ -1,0 +1,95 @@
+<div>
+    <div class="ui-g-12 ui-md-12 ui-lg-2"></div>
+    <div class="ui-g-12 ui-md-12 ui-lg-8 ui-fluid">
+        <p-panel header="Global Setting" styleClass="resolution-center">
+            <form novalidate [formGroup]="globalSettingForm">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <label for="name">Company Name</label>
+                        <input type="text" pInputText placeholder="Name" [ngClass]="!globalSettingForm.controls['name'].valid ? 'required-input' : 'valid-input'" name="name" id="name" formControlName="name">
+                    </div>
+                    <div class="ui-g-6">
+                        <label for="shortName">Short Name</label>
+                        <input type="text" pInputText placeholder="Short Name" [ngClass]="!globalSettingForm.controls['shortName'].valid ? 'required-input' : 'valid-input'" name="shortName" id="shortName" formControlName="shortName">
+                    </div>
+                    <div class="ui-g-6">
+                        <label for="yearOfEstablishment">Year Of Establishment</label>
+                        <input type="text" pInputText placeholder="Year Of Establishment" [ngClass]="!globalSettingForm.controls['yearOfEstablishment'].valid ? 'required-input' : 'valid-input'" name="yearOfEstablishment" id="yearOfEstablishment" formControlName="yearOfEstablishment">
+                    </div>
+
+                    <div class="ui-g-6">
+                        <label for="companyMotto">Company Motto</label>
+                        <input type="text" pInputText placeholder="Company Motto" [ngClass]="!globalSettingForm.controls['companyMotto'].valid ? 'required-input' : 'valid-input'" name="companyMotto" id="companyMotto" formControlName="companyMotto">
+                    </div>
+                    <div class="ui-g-6">
+                        <label for="webAddress">Web Address</label>
+                        <input type="text" pInputText placeholder="Web Address" [ngClass]="!globalSettingForm.controls['webAddress'].valid ? 'required-input' : 'valid-input'" name="webAddress" id="webAddress" formControlName="webAddress">
+                    </div>
+                    <div class="ui-g-12">
+                        <label for="address">Address</label>
+                        <textarea type="text" pInputText placeholder="Address" rows="5" [ngClass]="!globalSettingForm.controls['address'].valid ? 'required-input' : 'valid-input'" name="address" id="address" formControlName="address"></textarea>
+                    </div>
+                    <div class="ui-g-6">
+                        <label for="stateId">State</label>
+                        <p-dropdown [options]="stateArray" (onChange)="getSelectedLGA($event.value)" [ngClass]="!globalSettingForm.controls['stateId'].valid ? 'required-input' : 'valid-input'" name="stateId" id="stateId" formControlName="stateId"></p-dropdown>
+                    </div>
+                    <div class="ui-g-6">
+                        <label for="localGovtId">Local Govt</label>
+                        <p-dropdown [options]="lgaArray" name="localGovtId" id="localGovtId" [ngClass]="!globalSettingForm.controls['localGovtId'].valid ? 'required-input' : 'valid-input'" formControlName="localGovtId"></p-dropdown>
+                    </div>
+                    <div class="ui-g-6">
+                        <label for="contactNumber">Contact Number</label>
+                        <input type="text" pInputText placeholder="Contact Number " [ngClass]="!globalSettingForm.controls['contactNumber'].valid ? 'required-input' : 'valid-input'" name="contactNumber" id="contactNumber" formControlName="contactNumber">
+                    </div>
+
+                    <div class="ui-g-6">
+                        <label for="email">Email</label>
+                        <input type="text" pInputText placeholder="Email " [ngClass]="!globalSettingForm.controls['email'].valid ? 'required-input' : 'valid-input'" name="email" id="email" formControlName="email">
+                    </div>
+                    <div class="ui-g-6">
+                        <label for="contactPerson">Contact Person</label>
+                        <input type="text" pInputText placeholder="Contact Person" [ngClass]="!globalSettingForm.controls['contactPerson'].valid ? 'required-input' : 'valid-input'" name="contactPerson" id="contactPerson" formControlName="contactPerson">
+                    </div>
+                    <div class="ui-g-6">
+                        <label for="contactPersonPhone">Contact Person Phone</label>
+                        <input type="text" pInputText placeholder="Contact Person Phone" [ngClass]="!globalSettingForm.controls['contactPersonPhone'].valid ? 'required-input' : 'valid-input'" name="contactPersonPhone" id="contactPersonPhone" formControlName="contactPersonPhone">
+                    </div>
+                    <div class="ui-g-6">
+                        <label for="contactPersonEmail">Contact Person Email</label>
+
+                        <input type="text" pInputText placeholder="Contact Person Email" [ngClass]="!globalSettingForm.controls['contactPersonEmail'].valid ? 'required-input' : 'valid-input'" name="contactPersonEmail" id="contactPersonEmail" formControlName="contactPersonEmail">
+                    </div>
+                    <div class="ui-g-12">
+                        <p-toolbar>
+                            <div class="ui-toolbar-group-right">
+                                <button pButton type="button" (click)="displayList=true; displayDataInput=false" label="Back to List" style="margin-bottom:10px" class="ui-button-danger"></button>
+                            </div>
+
+                            <div class="ui-toolbar-group-right">
+
+                                <button [disabled]="(globalSettingForm.invalid)" pButton type="button" (click)="SubmitGlobalSetting(globalSettingForm)" label="Submit" icon="fa fa-plus"></button>
+                            </div>
+                        </p-toolbar>
+                    </div>
+                </div>
+            </form>
+
+        </p-panel>
+
+        <div class="ui-g-12">
+            <div class="card card-w-title">
+                <h1>Top Bar Logo (200px X 80px)</h1>
+                <!-- <app-logo-upload [tenantId]="tenantId" [logoType]="1"></app-logo-upload> -->
+                <!-- <app-logo-upload></app-logo-upload> -->
+            </div>
+        </div>
+
+        <div class="ui-g-12">
+            <div class="card card-w-title">
+                <h1>Main Logo (200px X 200px)</h1>
+                <!-- <app-logo-upload [tenantId]="tenantId" [logoType]="2"></app-logo-upload> -->
+            </div>
+        </div>
+    </div>
+    <div class="ui-g-12 ui-md-12 ui-lg-2"></div>
+</div>
